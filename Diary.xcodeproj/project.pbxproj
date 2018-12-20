@@ -15,6 +15,13 @@
 		090F05C321CAE289006FA823 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 090F05C221CAE289006FA823 /* Assets.xcassets */; };
 		090F05C621CAE289006FA823 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 090F05C421CAE289006FA823 /* LaunchScreen.storyboard */; };
 		090F05D121CAE289006FA823 /* DiaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F05D021CAE289006FA823 /* DiaryTests.swift */; };
+		090F05DF21CB0BDA006FA823 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F05DE21CB0BDA006FA823 /* PostCell.swift */; };
+		090F05EF21CB23E3006FA823 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F05EE21CB23E3006FA823 /* CoreDataStack.swift */; };
+		090F060421CB3BDE006FA823 /* Photo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060021CB3BDE006FA823 /* Photo+CoreDataClass.swift */; };
+		090F060521CB3BDE006FA823 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060121CB3BDE006FA823 /* Photo+CoreDataProperties.swift */; };
+		090F060621CB3BDE006FA823 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060221CB3BDE006FA823 /* Post+CoreDataClass.swift */; };
+		090F060721CB3BDE006FA823 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060321CB3BDE006FA823 /* Post+CoreDataProperties.swift */; };
+		09F7127B21CC1C2300B4FE4F /* TextLinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F7127A21CC1C2300B4FE4F /* TextLinesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +47,13 @@
 		090F05CC21CAE289006FA823 /* DiaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		090F05D021CAE289006FA823 /* DiaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryTests.swift; sourceTree = "<group>"; };
 		090F05D221CAE289006FA823 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		090F05DE21CB0BDA006FA823 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		090F05EE21CB23E3006FA823 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		090F060021CB3BDE006FA823 /* Photo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		090F060121CB3BDE006FA823 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		090F060221CB3BDE006FA823 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
+		090F060321CB3BDE006FA823 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		09F7127A21CC1C2300B4FE4F /* TextLinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +95,10 @@
 		090F05B521CAE287006FA823 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				090F05E121CB1055006FA823 /* Models */,
+				090F05E021CB0BF2006FA823 /* Controllers */,
+				090F05DB21CB0ADF006FA823 /* Views */,
 				090F05B621CAE287006FA823 /* AppDelegate.swift */,
-				090F05BB21CAE287006FA823 /* MasterViewController.swift */,
-				090F05BD21CAE287006FA823 /* DetailViewController.swift */,
 				090F05BF21CAE287006FA823 /* Main.storyboard */,
 				090F05C221CAE289006FA823 /* Assets.xcassets */,
 				090F05C421CAE289006FA823 /* LaunchScreen.storyboard */,
@@ -100,6 +115,36 @@
 				090F05D221CAE289006FA823 /* Info.plist */,
 			);
 			path = DiaryTests;
+			sourceTree = "<group>";
+		};
+		090F05DB21CB0ADF006FA823 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				090F05DE21CB0BDA006FA823 /* PostCell.swift */,
+				09F7127A21CC1C2300B4FE4F /* TextLinesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		090F05E021CB0BF2006FA823 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				090F05BB21CAE287006FA823 /* MasterViewController.swift */,
+				090F05BD21CAE287006FA823 /* DetailViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		090F05E121CB1055006FA823 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				090F060021CB3BDE006FA823 /* Photo+CoreDataClass.swift */,
+				090F060121CB3BDE006FA823 /* Photo+CoreDataProperties.swift */,
+				090F060221CB3BDE006FA823 /* Post+CoreDataClass.swift */,
+				090F060321CB3BDE006FA823 /* Post+CoreDataProperties.swift */,
+				090F05EE21CB23E3006FA823 /* CoreDataStack.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,9 +249,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				090F05B721CAE287006FA823 /* AppDelegate.swift in Sources */,
+				090F060421CB3BDE006FA823 /* Photo+CoreDataClass.swift in Sources */,
 				090F05BA21CAE287006FA823 /* Diary.xcdatamodeld in Sources */,
+				090F060721CB3BDE006FA823 /* Post+CoreDataProperties.swift in Sources */,
 				090F05BC21CAE287006FA823 /* MasterViewController.swift in Sources */,
+				090F060621CB3BDE006FA823 /* Post+CoreDataClass.swift in Sources */,
+				09F7127B21CC1C2300B4FE4F /* TextLinesView.swift in Sources */,
+				090F05EF21CB23E3006FA823 /* CoreDataStack.swift in Sources */,
 				090F05BE21CAE287006FA823 /* DetailViewController.swift in Sources */,
+				090F060521CB3BDE006FA823 /* Photo+CoreDataProperties.swift in Sources */,
+				090F05DF21CB0BDA006FA823 /* PostCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
