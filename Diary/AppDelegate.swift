@@ -21,10 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
-
-//        let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
-//        let controller = masterNavigationController.topViewController as! MasterViewController
-        // controller.managedObjectContext = self.persistentContainer.viewContext
+        
         return true
     }
 
@@ -48,8 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-        // self.saveContext()
     }
 
     // MARK: - Split view

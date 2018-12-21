@@ -12,5 +12,10 @@ import CoreData
 
 
 public class Post: NSManagedObject {
-
+    /// A general mood for the Post.
+    enum Mood: Int16 {
+        case bad
+        case average
+        case good
+    }
 }

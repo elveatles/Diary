@@ -17,11 +17,12 @@ extension Post {
         return NSFetchRequest<Post>(entityName: "Post")
     }
 
-    @NSManaged public var createDate: NSDate?
-    @NSManaged public var message: String?
+    @NSManaged public var createDate: Date
+    @NSManaged public var message: String
     @NSManaged public var location: String?
-    @NSManaged public var photos: NSSet?
-
+    @NSManaged public var mood: NSNumber?
+    @NSManaged public var photos: Set<Photo>
+    @NSManaged public var section: String
 }
 
 // MARK: Generated accessors for photos
@@ -39,4 +40,28 @@ extension Post {
     @objc(removePhotos:)
     @NSManaged public func removeFromPhotos(_ values: NSSet)
 
+}
+
+// MARK: - Non-generated code
+
+extension Post: CoreDataEntity {}
+
+extension Post {
+    /// Get the Date formatter for a section.
+    static var sectionFormatter: DateFormatter {
+        let result = DateFormatter()
+        result.dateFormat = "yyyy-MM"
+        return result
+    }
+    
+    /// Get the mood as an enum value.
+    var moodEnum: Mood? {
+        guard let mood = mood else { return nil }
+        return Mood(rawValue: mood.int16Value)
+    }
+    
+    /// Updates section with the value of createDate
+    func updateSection() {
+        section = Post.sectionFormatter.string(from: createDate)
+    }
 }

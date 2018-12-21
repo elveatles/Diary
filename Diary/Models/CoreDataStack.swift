@@ -11,6 +11,9 @@ import CoreData
 
 /// Convenient interface to the CoreData stack.
 class CoreDataStack {
+    /// The main stack to use.
+    static let main = CoreDataStack()
+    
     // MARK: - Core Data stack
     
     /// Auto-created with project when "Core Data" checkbox is checked.
@@ -40,6 +43,17 @@ class CoreDataStack {
         })
         return container
     }()
+    
+    /// Convenience function for persistentContainer.viewContext.
+    lazy var context: NSManagedObjectContext = {
+        return persistentContainer.viewContext
+    }()
+    
+    /// Create a new entity object with this CoreData stack.
+    func newObject<T: CoreDataEntity>() -> T {
+        let context = persistentContainer.viewContext
+        return NSEntityDescription.insertNewObject(forEntityName: T.entityName, into: context) as! T
+    }
     
     // MARK: - Core Data Saving support
     

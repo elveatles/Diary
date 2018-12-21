@@ -1,0 +1,83 @@
+//
+//  PostListDataSource.swift
+//  Diary
+//
+//  Created by Erik Carlson on 12/20/18.
+//  Copyright © 2018 Round and Rhombus. All rights reserved.
+//
+
+import UIKit
+import CoreData
+
+/// Data source for Posts.
+class PostsDataSource: NSObject, UITableViewDataSource {
+    /// Date formatter for section header titles.
+    static let sectionDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateFormat = "MMMM yyyy"
+        return result
+    }()
+    /// The table view the data source is for.
+    let tableView: UITableView
+    
+    lazy var fetchDelegate: PostsFetchDelegate = PostsFetchDelegate(tableView: tableView)
+    
+    /// Fetched results controller used for managing core data fetches for the data source.
+    lazy var fetchedResultsController: NSFetchedResultsController<Post> = {
+        let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
+        
+        // Set the batch size to a suitable number.
+        fetchRequest.fetchBatchSize = 20
+        
+        // Edit the sort key as appropriate.
+        let sortDescriptor = NSSortDescriptor(key: "createDate", ascending: false)
+        
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let context = CoreDataStack.main.context
+        // Edit the section name key path and cache name if appropriate.
+        // nil for section name key path means "no sections".
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "section", cacheName: "Master")
+        aFetchedResultsController.delegate = fetchDelegate
+        
+        do {
+            try aFetchedResultsController.performFetch()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return aFetchedResultsController
+    }()
+    
+    init(tableView: UITableView) {
+        self.tableView = tableView
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedResultsController.sections?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sectionInfo = fetchedResultsController.sections?[section] else { return nil }
+        
+        // Convert the date format stored in CoreData to the format used for section header titles.
+        guard let date = Post.sectionFormatter.date(from: sectionInfo.name) else { return nil }
+        let title = PostsDataSource.sectionDateFormatter.string(from: date)
+        return title
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostCell.cellIdentifier, for: indexPath) as! PostCell
+        let post = fetchedResultsController.object(at: indexPath)
+        cell.configure(post)
+        return cell
+    }
+}

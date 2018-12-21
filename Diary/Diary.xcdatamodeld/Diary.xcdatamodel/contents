@@ -8,10 +8,12 @@
         <attribute name="createDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" minValueString="2" syncable="YES"/>
         <attribute name="message" attributeType="String" minValueString="3" syncable="YES"/>
+        <attribute name="mood" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="section" attributeType="String" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" maxCount="10" deletionRule="Cascade" destinationEntity="Photo" inverseName="post" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Post" positionX="261" positionY="198" width="128" height="103"/>
         <element name="Photo" positionX="488.15625" positionY="327.6875" width="128" height="73"/>
+        <element name="Post" positionX="261" positionY="198" width="128" height="135"/>
     </elements>
 </model>
