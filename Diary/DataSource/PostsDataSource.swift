@@ -80,4 +80,14 @@ class PostsDataSource: NSObject, UITableViewDataSource {
         cell.configure(post)
         return cell
     }
+    
+    /**
+     Get the Post object at a certain index path.
+     
+     - Parameter indexPath: The index path to get the post from.
+     - Returns: The Post at the index path.
+    */
+    func object(at indexPath: IndexPath) -> Post {
+        return fetchedResultsController.object(at: indexPath)
+    }
 }

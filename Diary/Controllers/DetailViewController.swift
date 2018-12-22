@@ -47,10 +47,8 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        mood = nil
-//        configureView()
+        configureView()
     }
     
     @IBAction func savePost(_ sender: UIBarButtonItem) {
@@ -100,18 +98,9 @@ class DetailViewController: UIViewController {
     /// Configure the view depending on the mode and post.
     func configureView() {
         switch mode {
-        case .newPost:
-            print("new post")
-        case .editPost:
-            print("edit post")
+        case .newPost: configureViewForNewPost()
+        case .editPost: configureViewForEditPost()
         }
-        
-//        // Update the user interface for the detail item.
-//        if let detail = detailItem {
-//            if let label = detailDescriptionLabel {
-//                label.text = detail.timestamp!.description
-//            }
-//        }
     }
     
     /// Because this is a detail view controller presented in a split view controller,
@@ -119,6 +108,41 @@ class DetailViewController: UIViewController {
     /// Instead, we have to get the master navigation controller and pop to root.
     func goBackToMaster() {
         navigationController?.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    /// Configure the view for a new post
+    private func configureViewForNewPost() {
+        pictureLabel.image = #imageLiteral(resourceName: "post_image_default")
+        mood = nil
+        dateLabel.text = PostCell.dateFormatter.string(from: Date())
+        messageLabel.text = post?.message
+        addLocationButton.setTitle("Add location", for: .normal)
+    }
+    
+    /// Configure the view to edit an existing post.
+    private func configureViewForEditPost() {
+        guard let post = post else {
+            print("DetailViewController.configureView: mode is editPost, but a Post object was not injected.")
+            return
+        }
+        
+        // Main photo
+        if let photo = post.photos.first {
+            pictureLabel.image = photo.image
+        } else {
+            pictureLabel.image = #imageLiteral(resourceName: "post_image_default")
+        }
+        
+        mood = post.moodEnum
+        dateLabel.text = PostCell.dateFormatter.string(from: post.createDate)
+        messageLabel.text = post.message
+        
+        // Location
+        if let location = post.location, !location.isEmpty {
+            addLocationButton.setTitle(location, for: .normal)
+        } else {
+            addLocationButton.setTitle("Add location", for: .normal)
+        }
     }
 }
 
