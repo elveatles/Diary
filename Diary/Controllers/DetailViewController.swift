@@ -44,14 +44,30 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    /// Delegate for the message text view
+    private lazy var messageDelegate: PostMessageDelegate = {
+        let result = PostMessageDelegate(messageTextView: messageLabel, textCountLabel: charLimitLabel)
+        result.placeholderText = "What happened today?"
+        return result
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        messageLabel.delegate = messageDelegate
+        
         configureView()
     }
     
+    /// Save the post.
     @IBAction func savePost(_ sender: UIBarButtonItem) {
+        // Check for required fields.
+        // Post must at least contain a message.
+        guard messageDelegate.textCountStripped > 0 else {
+            showAlert(title: "No Text", message: "Cannot save a diary entry without any text.")
+            return
+        }
+        
         // New post creation
         if mode == .newPost {
             post = CoreDataStack.main.newObject()
@@ -88,13 +104,6 @@ class DetailViewController: UIViewController {
         mood = .good
     }
     
-    //    var detailItem: Event? {
-//        didSet {
-//            // Update the view.
-//            configureView()
-//        }
-//    }
-    
     /// Configure the view depending on the mode and post.
     func configureView() {
         switch mode {
@@ -115,7 +124,7 @@ class DetailViewController: UIViewController {
         pictureLabel.image = #imageLiteral(resourceName: "post_image_default")
         mood = nil
         dateLabel.text = PostCell.dateFormatter.string(from: Date())
-        messageLabel.text = post?.message
+        setMessageText("")
         addLocationButton.setTitle("Add location", for: .normal)
     }
     
@@ -135,7 +144,7 @@ class DetailViewController: UIViewController {
         
         mood = post.moodEnum
         dateLabel.text = PostCell.dateFormatter.string(from: post.createDate)
-        messageLabel.text = post.message
+        setMessageText(post.message)
         
         // Location
         if let location = post.location, !location.isEmpty {
@@ -143,6 +152,20 @@ class DetailViewController: UIViewController {
         } else {
             addLocationButton.setTitle("Add location", for: .normal)
         }
+    }
+    
+    /**
+     Set the message text, and update its delegate.
+     
+     Use this instead of setting text on messageLabel directly since
+     placeholder text will not work otherwise.
+     
+     - Parameter text: The text to set for message.
+    */
+    private func setMessageText(_ text: String?) {
+        messageLabel.text = text
+        messageDelegate.textViewDidEndEditing(messageLabel)
+        messageDelegate.updateTextCount()
     }
 }
 
