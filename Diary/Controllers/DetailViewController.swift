@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 /// Shows a diary entry that can be edited or allows a user to create a new one.
 class DetailViewController: UIViewController {
@@ -44,16 +45,32 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    /// The current location name.
+    /// Sets addLocationButton title as well.
+    var locationName: String? {
+        didSet {
+            if let name = locationName {
+                addLocationButton.setTitle(name, for: .normal)
+            } else {
+                addLocationButton.setTitle("Add location", for: .normal)
+            }
+        }
+    }
     /// Delegate for the message text view
     private lazy var messageDelegate: PostMessageDelegate = {
         let result = PostMessageDelegate(messageTextView: messageLabel, textCountLabel: charLimitLabel)
         result.placeholderText = "What happened today?"
         return result
     }()
+    /// This flag is needed because CLLocationManagerDelegate will call
+    /// locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
+    /// even though CLLocationManager.requestWhenInUseAuthorization() was not called.
+    private var locationAuthRequested = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        AppDelegate.locationManager.delegate = self
         messageLabel.delegate = messageDelegate
         
         configureView()
@@ -86,10 +103,26 @@ class DetailViewController: UIViewController {
         } else {
             post.mood = nil
         }
+        post.location = locationName
         
         CoreDataStack.main.saveContext()
         
         goBackToMaster()
+    }
+    
+    /// Authorize location services if needed then request the location to add.
+    @IBAction func addLocation() {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationAuthRequested = true
+            AppDelegate.locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse:
+            AppDelegate.locationManager.requestLocation()
+        case .denied, .restricted:
+            showLocationAuthDeniedAlert()
+        case .authorizedAlways:
+            print("Location .authorizedAlways not implemented.")
+        }
     }
     
     @IBAction func badChosen() {
@@ -125,7 +158,7 @@ class DetailViewController: UIViewController {
         mood = nil
         dateLabel.text = PostCell.dateFormatter.string(from: Date())
         setMessageText("")
-        addLocationButton.setTitle("Add location", for: .normal)
+        locationName = nil
     }
     
     /// Configure the view to edit an existing post.
@@ -145,13 +178,7 @@ class DetailViewController: UIViewController {
         mood = post.moodEnum
         dateLabel.text = PostCell.dateFormatter.string(from: post.createDate)
         setMessageText(post.message)
-        
-        // Location
-        if let location = post.location, !location.isEmpty {
-            addLocationButton.setTitle(location, for: .normal)
-        } else {
-            addLocationButton.setTitle("Add location", for: .normal)
-        }
+        locationName = post.location
     }
     
     /**
@@ -166,6 +193,81 @@ class DetailViewController: UIViewController {
         messageLabel.text = text
         messageDelegate.textViewDidEndEditing(messageLabel)
         messageDelegate.updateTextCount()
+    }
+}
+
+
+extension DetailViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        // Check the location status.
+        switch status {
+        case .denied, .restricted:
+            if locationAuthRequested {
+                showLocationAuthDeniedAlert()
+            }
+        case .authorizedWhenInUse:
+            // This is the authorization we want.
+            if locationAuthRequested {
+                AppDelegate.locationManager.requestLocation()
+            }
+            break
+        default:
+            print("Unexpected location auth status: \(status)")
+        }
+        
+        locationAuthRequested = false
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        showAlert(title: "Location Error", message: error.localizedDescription)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // There should always be at least 1 location.
+        guard let location = locations.first else { return }
+        
+        getLocationName(location: location)
+    }
+    
+    /**
+     Get a location name from coordinates.
+     
+     Sets the addLocationButton title.
+     
+     - Parameter location: The location coordinates to get the location from.
+     */
+    private func getLocationName(location: CLLocation) {
+        let geoCoder = CLGeocoder()
+        geoCoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard let s = self else { return }
+            
+            // Check for error
+            if let error = error {
+                s.showAlert(title: "Location Name Error", message: "Could not get the name of your location: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let placemark = placemarks?.first else { return }
+            
+            // Create the location name and assign it to the location button.
+            if let thoroughfare = placemark.thoroughfare,
+                let locality = placemark.locality,
+                let administrativeArea = placemark.administrativeArea {
+                s.locationName = "\(thoroughfare) - \(locality), \(administrativeArea)"
+            } else {
+                s.locationName = "Unknown"
+            }
+            
+        }
+    }
+    
+    /// Show an alert informing the user that locations cannot be fetched because
+    /// the app is not authorized to do so.
+    private func showLocationAuthDeniedAlert() {
+        showAlert(
+            title: "Location Authorization",
+            message: "Cannot get location because authorization was denied or restricted.")
     }
 }
 
