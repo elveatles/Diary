@@ -55,6 +55,12 @@ class CoreDataStack {
         return NSEntityDescription.insertNewObject(forEntityName: T.entityName, into: context) as! T
     }
     
+    /// Convenience function for deleting a CoreData object with the stored context.
+    /// - Parameter object: The object to delete.
+    func deleteObject(_ object: NSManagedObject) {
+        context.delete(object)
+    }
+    
     // MARK: - Core Data Saving support
     
     /// Auto-created with project when "Core Data" checkbox is checked.

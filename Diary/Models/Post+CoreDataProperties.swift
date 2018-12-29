@@ -14,7 +14,10 @@ import CoreData
 extension Post {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Post> {
-        return NSFetchRequest<Post>(entityName: "Post")
+        let request = NSFetchRequest<Post>(entityName: "Post")
+        let sortDescriptor = NSSortDescriptor(key: "createDate", ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+        return request
     }
 
     @NSManaged public var createDate: Date
@@ -58,6 +61,11 @@ extension Post {
     var moodEnum: Mood? {
         guard let mood = mood else { return nil }
         return Mood(rawValue: mood.int16Value)
+    }
+    
+    /// Get the photos sorted by createDate.
+    var photosSorted: [Photo] {
+        return photos.sorted { $0.createDate < $1.createDate }
     }
     
     /// Updates section with the value of createDate

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0906A04021D6FE9600D770E9 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906A03F21D6FE9600D770E9 /* Style.swift */; };
+		0906A04221D701F000D770E9 /* Array+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906A04121D701F000D770E9 /* Array+Helpers.swift */; };
 		090F05B721CAE287006FA823 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F05B621CAE287006FA823 /* AppDelegate.swift */; };
 		090F05BA21CAE287006FA823 /* Diary.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 090F05B821CAE287006FA823 /* Diary.xcdatamodeld */; };
 		090F05BC21CAE287006FA823 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F05BB21CAE287006FA823 /* MasterViewController.swift */; };
@@ -21,6 +23,11 @@
 		090F060521CB3BDE006FA823 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060121CB3BDE006FA823 /* Photo+CoreDataProperties.swift */; };
 		090F060621CB3BDE006FA823 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060221CB3BDE006FA823 /* Post+CoreDataClass.swift */; };
 		090F060721CB3BDE006FA823 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090F060321CB3BDE006FA823 /* Post+CoreDataProperties.swift */; };
+		092F32CD21D4740F0092A94C /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F32CC21D4740F0092A94C /* UIImage+Helpers.swift */; };
+		092F32D121D572A50092A94C /* PhotoPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F32D021D572A50092A94C /* PhotoPageController.swift */; };
+		092F32D321D5740C0092A94C /* PhotoViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F32D221D5740C0092A94C /* PhotoViewerController.swift */; };
+		092F32D721D5AA780092A94C /* PhotoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F32D621D5AA780092A94C /* PhotoProtocol.swift */; };
+		092F32D921D5AACA0092A94C /* TempPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F32D821D5AACA0092A94C /* TempPhoto.swift */; };
 		0951DF6721CC6C2F008A4333 /* CoreDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951DF6621CC6C2F008A4333 /* CoreDataEntity.swift */; };
 		0951DF6E21CC8E9B008A4333 /* PostsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951DF6D21CC8E9B008A4333 /* PostsDataSource.swift */; };
 		0951DF7121CC905A008A4333 /* PostsFetchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951DF7021CC905A008A4333 /* PostsFetchDelegate.swift */; };
@@ -41,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0906A03F21D6FE9600D770E9 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		0906A04121D701F000D770E9 /* Array+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Helpers.swift"; sourceTree = "<group>"; };
 		090F05B321CAE287006FA823 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		090F05B621CAE287006FA823 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		090F05B921CAE287006FA823 /* Diary.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diary.xcdatamodel; sourceTree = "<group>"; };
@@ -59,6 +68,11 @@
 		090F060121CB3BDE006FA823 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		090F060221CB3BDE006FA823 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		090F060321CB3BDE006FA823 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		092F32CC21D4740F0092A94C /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
+		092F32D021D572A50092A94C /* PhotoPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPageController.swift; sourceTree = "<group>"; };
+		092F32D221D5740C0092A94C /* PhotoViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerController.swift; sourceTree = "<group>"; };
+		092F32D621D5AA780092A94C /* PhotoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoProtocol.swift; sourceTree = "<group>"; };
+		092F32D821D5AACA0092A94C /* TempPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempPhoto.swift; sourceTree = "<group>"; };
 		0951DF6621CC6C2F008A4333 /* CoreDataEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataEntity.swift; sourceTree = "<group>"; };
 		0951DF6D21CC8E9B008A4333 /* PostsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsDataSource.swift; sourceTree = "<group>"; };
 		0951DF7021CC905A008A4333 /* PostsFetchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetchDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +151,7 @@
 			children = (
 				090F05DE21CB0BDA006FA823 /* PostCell.swift */,
 				09F7127A21CC1C2300B4FE4F /* TextLinesView.swift */,
+				0906A03F21D6FE9600D770E9 /* Style.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -146,6 +161,8 @@
 			children = (
 				090F05BB21CAE287006FA823 /* MasterViewController.swift */,
 				090F05BD21CAE287006FA823 /* DetailViewController.swift */,
+				092F32D021D572A50092A94C /* PhotoPageController.swift */,
+				092F32D221D5740C0092A94C /* PhotoViewerController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -159,6 +176,8 @@
 				090F060321CB3BDE006FA823 /* Post+CoreDataProperties.swift */,
 				090F05EE21CB23E3006FA823 /* CoreDataStack.swift */,
 				0951DF6621CC6C2F008A4333 /* CoreDataEntity.swift */,
+				092F32D621D5AA780092A94C /* PhotoProtocol.swift */,
+				092F32D821D5AACA0092A94C /* TempPhoto.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -185,6 +204,8 @@
 			isa = PBXGroup;
 			children = (
 				0984144C21D41378007FAFF4 /* UIViewController+Helpers.swift */,
+				092F32CC21D4740F0092A94C /* UIImage+Helpers.swift */,
+				0906A04121D701F000D770E9 /* Array+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -295,14 +316,21 @@
 				090F05B721CAE287006FA823 /* AppDelegate.swift in Sources */,
 				090F060421CB3BDE006FA823 /* Photo+CoreDataClass.swift in Sources */,
 				090F05BA21CAE287006FA823 /* Diary.xcdatamodeld in Sources */,
+				0906A04021D6FE9600D770E9 /* Style.swift in Sources */,
 				0951DF7121CC905A008A4333 /* PostsFetchDelegate.swift in Sources */,
 				0951DF6721CC6C2F008A4333 /* CoreDataEntity.swift in Sources */,
 				090F060721CB3BDE006FA823 /* Post+CoreDataProperties.swift in Sources */,
 				090F05BC21CAE287006FA823 /* MasterViewController.swift in Sources */,
+				092F32CD21D4740F0092A94C /* UIImage+Helpers.swift in Sources */,
+				092F32D321D5740C0092A94C /* PhotoViewerController.swift in Sources */,
+				092F32D121D572A50092A94C /* PhotoPageController.swift in Sources */,
 				090F060621CB3BDE006FA823 /* Post+CoreDataClass.swift in Sources */,
+				092F32D721D5AA780092A94C /* PhotoProtocol.swift in Sources */,
+				092F32D921D5AACA0092A94C /* TempPhoto.swift in Sources */,
 				0984144D21D41378007FAFF4 /* UIViewController+Helpers.swift in Sources */,
 				09F7127B21CC1C2300B4FE4F /* TextLinesView.swift in Sources */,
 				090F05EF21CB23E3006FA823 /* CoreDataStack.swift in Sources */,
+				0906A04221D701F000D770E9 /* Array+Helpers.swift in Sources */,
 				0951DF6E21CC8E9B008A4333 /* PostsDataSource.swift in Sources */,
 				090F05BE21CAE287006FA823 /* DetailViewController.swift in Sources */,
 				090F060521CB3BDE006FA823 /* Photo+CoreDataProperties.swift in Sources */,

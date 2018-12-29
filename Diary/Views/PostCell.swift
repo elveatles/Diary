@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// A cell that shows the contents of a diary post.
 class PostCell: UITableViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var moodImageView: UIImageView!
@@ -36,10 +37,11 @@ class PostCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    /// Configure the view with a post.
+    /// - Parameter post: The post to show.
     func configure(_ post: Post) {
         // Photo
-        let photos = Array(post.photos)
-        if let photo = photos.first {
+        if let photo = post.photosSorted.first {
             photoImageView.image = photo.image
         } else {
             photoImageView.image = #imageLiteral(resourceName: "post_image_default")
