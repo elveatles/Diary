@@ -31,9 +31,6 @@ class MasterViewController: UITableViewController {
         
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -66,31 +63,6 @@ class MasterViewController: UITableViewController {
     @IBAction func writeNewPost(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "showDetail", sender: DetailViewController.Mode.newPost)
     }
-    
-    /*
-    // MARK: - Table View
-
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let context = fetchedResultsController.managedObjectContext
-            context.delete(fetchedResultsController.object(at: indexPath))
-                
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-    */
 }
 
 

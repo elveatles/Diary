@@ -81,6 +81,20 @@ class PostsDataSource: NSObject, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //let context = fetchedResultsController.managedObjectContext
+            let post = object(at: indexPath)
+            CoreDataStack.main.deleteObject(post)
+            CoreDataStack.main.saveContext()
+        }
+    }
+    
     /**
      Get the Post object at a certain index path.
      
