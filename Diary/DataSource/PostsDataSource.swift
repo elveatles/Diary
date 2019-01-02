@@ -90,4 +90,25 @@ class PostsDataSource: NSObject, UITableViewDataSource {
     func object(at indexPath: IndexPath) -> Post {
         return fetchedResultsController.object(at: indexPath)
     }
+    
+    /**
+     Change the search text being used.
+     
+     Need to reload the tableView after calling this.
+     
+     - Parameter text: The text to search for.
+     - Throws: Any error that NSFetchedResultsController throws.
+    */
+    func search(for text: String) throws {
+        // Must delete cache before changing the predicate.
+        NSFetchedResultsController<Post>.deleteCache(withName: "Master")
+        
+        var predicate: NSPredicate?
+        if !text.isEmpty {
+            predicate = NSPredicate(format: "message CONTAINS[cd] %@", text)
+        }
+        fetchedResultsController.fetchRequest.predicate = predicate
+        
+        try fetchedResultsController.performFetch()
+    }
 }

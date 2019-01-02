@@ -19,6 +19,7 @@ class MasterViewController: UITableViewController {
     lazy var postsTableDelegate: PostsTableDelegate = {
         return PostsTableDelegate()
     }()
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,10 @@ class MasterViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = postsDataSource
         tableView.delegate = postsTableDelegate
+        tableView.tableHeaderView = searchController.searchBar
+        
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
         
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
@@ -86,4 +91,18 @@ class MasterViewController: UITableViewController {
         }
     }
     */
+}
+
+
+extension MasterViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        // Update the search text for the data source's fetched results controller.
+        let text = searchController.searchBar.text ?? ""
+        do {
+            try postsDataSource.search(for: text)
+            tableView.reloadData()
+        } catch {
+            print(error)
+        }
+    }
 }
