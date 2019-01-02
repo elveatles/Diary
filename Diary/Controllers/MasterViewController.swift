@@ -24,6 +24,8 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.tintColor = .white
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = postsDataSource
         tableView.delegate = postsTableDelegate
