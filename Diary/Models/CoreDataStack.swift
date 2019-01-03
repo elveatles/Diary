@@ -11,38 +11,17 @@ import CoreData
 
 /// Convenient interface to the CoreData stack.
 class CoreDataStack {
-    /// The main stack to use.
-    static let main = CoreDataStack()
+    /// The persistent container that this class wraps.
+    let persistentContainer: NSPersistentContainer
     
-    // MARK: - Core Data stack
-    
-    /// Auto-created with project when "Core Data" checkbox is checked.
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-         */
-        let container = NSPersistentContainer(name: "Diary")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
+    /**
+     Initialize with a given persistent container.
+     
+     - Parameter container: The persistent container to use. This will be different depending on whether this class will be used in production or testing.
+    */
+    init(container: NSPersistentContainer) {
+        self.persistentContainer = container
+    }
     
     /// Convenience function for persistentContainer.viewContext.
     lazy var context: NSManagedObjectContext = {
@@ -51,7 +30,6 @@ class CoreDataStack {
     
     /// Create a new entity object with this CoreData stack.
     func newObject<T: CoreDataEntity>() -> T {
-        let context = persistentContainer.viewContext
         return NSEntityDescription.insertNewObject(forEntityName: T.entityName, into: context) as! T
     }
     

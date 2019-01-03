@@ -57,10 +57,21 @@ extension Post {
         return result
     }
     
-    /// Get the mood as an enum value.
+    /// Get or set the mood as an enum value.
     var moodEnum: Mood? {
-        guard let mood = mood else { return nil }
-        return Mood(rawValue: mood.int16Value)
+        get {
+            guard let mood = mood else { return nil }
+            return Mood(rawValue: mood.int16Value)
+        }
+        
+        set {
+            guard let newMood = newValue else {
+                mood = nil
+                return
+            }
+            
+            mood = newMood.rawValue as NSNumber
+        }
     }
     
     /// Get the photos sorted by createDate.

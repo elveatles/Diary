@@ -14,7 +14,7 @@ extension UIImage {
      
      - Parameter side: The length of the longest side. The width or height will be scaled to match.
     */
-    func resized(side: CGFloat) -> UIImage {
+    public func resized(side: CGFloat) -> UIImage {
         var newSize = CGSize.zero
         if size.width >= size.height {
             let ratio = side / size.width

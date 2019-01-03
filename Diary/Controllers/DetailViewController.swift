@@ -120,7 +120,7 @@ class DetailViewController: UIViewController {
         }
         
         // Save the post being edited or create a new post.
-        let postToSave = post ?? CoreDataStack.main.newObject()
+        let postToSave = post ?? AppDelegate.coreDataStack.newObject()
         // New post initial values.
         if post == nil {
             postToSave.createDate = Date()
@@ -129,18 +129,14 @@ class DetailViewController: UIViewController {
         
         // Take all the data from the UI and put it in the Post CoreData object.
         postToSave.message = messageLabel.text
-        if let mood = mood {
-            postToSave.mood = mood.rawValue as NSNumber
-        } else {
-            postToSave.mood = nil
-        }
+        postToSave.moodEnum = mood
         postToSave.location = locationName
         applyPhotoDeletions()
         postToSave.photos = tempPhotosToPhotos()
         
         post = postToSave
         
-        CoreDataStack.main.saveContext()
+        AppDelegate.coreDataStack.saveContext()
         
         // If the detail view is being shown in a split view,
         // then show a save popup, otherwise, go back to the master view.
@@ -329,7 +325,7 @@ class DetailViewController: UIViewController {
         let toDelete = post.photos.subtracting(photosFromTemp)
         // Delete the photos (Not saved yet).
         for photo in toDelete {
-            CoreDataStack.main.deleteObject(photo)
+            AppDelegate.coreDataStack.deleteObject(photo)
         }
     }
     
@@ -344,7 +340,7 @@ class DetailViewController: UIViewController {
             if let photo = tempPhoto.photo {
                 converted.insert(photo)
             } else {
-                let photo: Photo = CoreDataStack.main.newObject()
+                let photo: Photo = AppDelegate.coreDataStack.newObject()
                 photo.copy(from: tempPhoto)
                 converted.insert(photo)
             }

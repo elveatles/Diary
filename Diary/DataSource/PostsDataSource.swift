@@ -36,7 +36,7 @@ class PostsDataSource: NSObject, UITableViewDataSource {
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let context = CoreDataStack.main.context
+        let context = AppDelegate.coreDataStack.context
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
         let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "section", cacheName: "Master")
@@ -93,8 +93,8 @@ class PostsDataSource: NSObject, UITableViewDataSource {
             postWillDelete?(indexPath)
             
             let post = object(at: indexPath)
-            CoreDataStack.main.deleteObject(post)
-            CoreDataStack.main.saveContext()
+            AppDelegate.coreDataStack.deleteObject(post)
+            AppDelegate.coreDataStack.saveContext()
         }
     }
     
