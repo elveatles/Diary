@@ -21,6 +21,8 @@ class PostsDataSource: NSObject, UITableViewDataSource {
     let tableView: UITableView
     
     lazy var fetchDelegate: PostsFetchDelegate = PostsFetchDelegate(tableView: tableView)
+    /// Callback that is called right before a post is deleted.
+    var postWillDelete: ((IndexPath) -> Void)?
     
     /// Fetched results controller used for managing core data fetches for the data source.
     lazy var fetchedResultsController: NSFetchedResultsController<Post> = {
@@ -88,7 +90,8 @@ class PostsDataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            //let context = fetchedResultsController.managedObjectContext
+            postWillDelete?(indexPath)
+            
             let post = object(at: indexPath)
             CoreDataStack.main.deleteObject(post)
             CoreDataStack.main.saveContext()

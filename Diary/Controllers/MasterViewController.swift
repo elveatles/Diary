@@ -13,16 +13,25 @@ import CoreData
 class MasterViewController: UITableViewController {
     /// Posts data source for the table view.
     lazy var postsDataSource: PostsDataSource = {
-        return PostsDataSource(tableView: tableView)
+        let result = PostsDataSource(tableView: tableView)
+        result.postWillDelete = postWillDelete
+        return result
     }()
     /// Delegate for the table view
     lazy var postsTableDelegate: PostsTableDelegate = {
         return PostsTableDelegate()
     }()
     let searchController = UISearchController(searchResultsController: nil)
+    private var detailViewController: DetailViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get the detail controller and assign it to the property.
+        if let split = splitViewController {
+            let controllers = split.viewControllers
+            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        }
         
         navigationController?.navigationBar.tintColor = .white
         
@@ -45,25 +54,37 @@ class MasterViewController: UITableViewController {
             // Get DetailViewController
             let destination = segue.destination as! UINavigationController
             let controller = destination.topViewController as! DetailViewController
-            // Set the mode (New Post or Edit Post)
-            if let mode = sender as? DetailViewController.Mode {
-                controller.mode = mode
-            } else {
-                controller.mode = .editPost
+            detailViewController = controller
+            // Write a New post
+            if let obj = sender, let newPost = obj as? Bool, newPost == true {
+                controller.post = nil
             }
             // If a table view cell was selected, get the Post for that cell,
             // and assign it to DetailViewController.post.
-            if let indexPath = tableView.indexPathForSelectedRow {
+            else if let indexPath = tableView.indexPathForSelectedRow {
                 controller.post = postsDataSource.object(at: indexPath)
-                // Split view controller fiddling with the nav bar back button
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
             }
+            
+            // Split view controller fiddling with the nav bar back button
+            controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+            controller.navigationItem.leftItemsSupplementBackButton = true
         }
     }
     
+    /// Segue to the detail controller in "new post" mode.
     @IBAction func writeNewPost(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "showDetail", sender: DetailViewController.Mode.newPost)
+        performSegue(withIdentifier: "showDetail", sender: true)
+    }
+    
+    /// If the post that will be deleted is being shown in the detail controller,
+    /// the detail controller will need to be updated so that it does not use
+    /// the deleted Post data anymore.
+    private func postWillDelete(indexPath: IndexPath) {
+        guard let controller = detailViewController else { return }
+        let post = postsDataSource.object(at: indexPath)
+        if post == controller.post {
+            controller.post = nil
+        }
     }
 }
 

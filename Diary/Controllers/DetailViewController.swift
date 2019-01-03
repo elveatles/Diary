@@ -13,27 +13,25 @@ import Photos
 
 /// Shows a diary entry that can be edited or allows a user to create a new one.
 class DetailViewController: UIViewController {
-    /// The mode of the DetailViewController.
-    enum Mode {
-        /// Editing an existing post.
-        case editPost
-        /// Creating a new post.
-        case newPost
-    }
-    
     @IBOutlet weak var pictureButton: UIButton!
     @IBOutlet weak var moodImageView: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var messageLabel: UITextView!
     @IBOutlet weak var addLocationButton: UIButton!
     @IBOutlet weak var charLimitLabel: UILabel!
+    @IBOutlet weak var saveBannerView: UIView!
+    @IBOutlet weak var saveBannerTopConstraint: NSLayoutConstraint!
     
     /// Reference to the photo page controller inside the container view.
     var photoPageController: PhotoPageController!
-    /// The mode to work in. Whether this is a new post or not.
-    var mode = Mode.editPost
     /// The post model with all the data needed to configure the UI.
-    var post: Post?
+    var post: Post? {
+        didSet {
+            if isViewLoaded {
+                configureView()
+            }
+        }
+    }
     /// The current mood chosen for the post.
     var mood: Post.Mood? {
         didSet {
@@ -85,6 +83,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.tintColor = .white
+        
         messageLabel.delegate = messageDelegate
         imagePickerController.delegate = self
         AppDelegate.locationManager.delegate = self
@@ -94,6 +94,10 @@ class DetailViewController: UIViewController {
         pictureButton.clipsToBounds = true
         
         configureView()
+        
+        // Hide the save popup
+        saveBannerTopConstraint.constant = -saveBannerView.frame.height
+        view.layoutIfNeeded()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -111,29 +115,36 @@ class DetailViewController: UIViewController {
             return
         }
         
-        // New post creation
-        if mode == .newPost {
-            post = CoreDataStack.main.newObject()
-            post?.createDate = Date()
-            post?.updateSection()
+        // Save the post being edited or create a new post.
+        let postToSave = post ?? CoreDataStack.main.newObject()
+        // New post initial values.
+        if post == nil {
+            postToSave.createDate = Date()
+            postToSave.updateSection()
         }
-        
-        guard let post = post else { return }
         
         // Take all the data from the UI and put it in the Post CoreData object.
-        post.message = messageLabel.text
+        postToSave.message = messageLabel.text
         if let mood = mood {
-            post.mood = mood.rawValue as NSNumber
+            postToSave.mood = mood.rawValue as NSNumber
         } else {
-            post.mood = nil
+            postToSave.mood = nil
         }
-        post.location = locationName
+        postToSave.location = locationName
         applyPhotoDeletions()
-        post.photos = tempPhotosToPhotos()
+        postToSave.photos = tempPhotosToPhotos()
+        
+        post = postToSave
         
         CoreDataStack.main.saveContext()
         
-        goBackToMaster()
+        // If the detail view is being shown in a split view,
+        // then show a save popup, otherwise, go back to the master view.
+        if navigationController?.navigationController == nil {
+            showSavePopup()
+        } else {
+            goBackToMaster()
+        }
     }
     
     /// Check photo library authorization and present imagePicker controller
@@ -198,11 +209,12 @@ class DetailViewController: UIViewController {
         mood = .good
     }
     
-    /// Configure the view depending on the mode and post.
+    /// Configure the view for the current post.
     func configureView() {
-        switch mode {
-        case .newPost: configureViewNew()
-        case .editPost: configureViewEdit()
+        if post == nil {
+            configureViewNew()
+        } else {
+            configureViewEdit()
         }
     }
     
@@ -226,6 +238,21 @@ class DetailViewController: UIViewController {
         photoPageController.addPhoto(photo)
         photoPageController.refresh()
         updateThumbnailPhoto()
+    }
+    
+    /// Show a popup that informs the user that the post was saved.
+    func showSavePopup() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.saveBannerTopConstraint.constant = 0
+            self.view.layoutSubviews()
+            print("anim1")
+        }) { finished in
+            UIView.animate(withDuration: 0.3, delay: 2, options: [], animations: {
+                self.saveBannerTopConstraint.constant = -self.saveBannerView.frame.height
+                self.view.layoutSubviews()
+                print("anim2")
+            }, completion: nil)
+        }
     }
     
     /// Because this is a detail view controller presented in a split view controller,
