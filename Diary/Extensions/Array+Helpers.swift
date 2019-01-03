@@ -15,7 +15,7 @@ extension Array {
      - Parameter index: The index to clamp.
      - Returns: The index clamped.
     */
-    func clampIndex(_ index: Int) -> Int {
+    public func clampIndex(_ index: Int) -> Int {
         return Swift.min(Swift.max(0, index), count - 1)
     }
 }

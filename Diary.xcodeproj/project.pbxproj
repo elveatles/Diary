@@ -34,6 +34,7 @@
 		0951DF7321CC9D4B008A4333 /* PostsTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951DF7221CC9D4B008A4333 /* PostsTableDelegate.swift */; };
 		0984144A21D4082B007FAFF4 /* PostMessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0984144921D4082B007FAFF4 /* PostMessageDelegate.swift */; };
 		0984144D21D41378007FAFF4 /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0984144C21D41378007FAFF4 /* UIViewController+Helpers.swift */; };
+		09E44C3521DE8D9D006A0971 /* ArrayHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E44C3421DE8D9D006A0971 /* ArrayHelpersTests.swift */; };
 		09F7127B21CC1C2300B4FE4F /* TextLinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F7127A21CC1C2300B4FE4F /* TextLinesView.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		0951DF7221CC9D4B008A4333 /* PostsTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsTableDelegate.swift; sourceTree = "<group>"; };
 		0984144921D4082B007FAFF4 /* PostMessageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageDelegate.swift; sourceTree = "<group>"; };
 		0984144C21D41378007FAFF4 /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
+		09E44C3421DE8D9D006A0971 /* ArrayHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayHelpersTests.swift; sourceTree = "<group>"; };
 		09F7127A21CC1C2300B4FE4F /* TextLinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +142,7 @@
 		090F05CF21CAE289006FA823 /* DiaryTests */ = {
 			isa = PBXGroup;
 			children = (
+				09E44C3421DE8D9D006A0971 /* ArrayHelpersTests.swift */,
 				090F05D021CAE289006FA823 /* DiaryTests.swift */,
 				090F05D221CAE289006FA823 /* Info.plist */,
 			);
@@ -343,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				090F05D121CAE289006FA823 /* DiaryTests.swift in Sources */,
+				09E44C3521DE8D9D006A0971 /* ArrayHelpersTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
