@@ -83,6 +83,10 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Make the writingPaperView use a repeating image.
+        let writingPaperImage = #imageLiteral(resourceName: "writing_paper")
+        messageLabel.backgroundColor = UIColor(patternImage: writingPaperImage)
+        
         navigationController?.navigationBar.tintColor = .white
         
         messageLabel.delegate = messageDelegate
