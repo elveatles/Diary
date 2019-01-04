@@ -30,6 +30,8 @@ extension Photo {
 
 extension Photo: CoreDataEntity {}
 
+extension Photo: PhotoProtocol {}
+
 extension Photo {
     /// Get a UIImage from imageData or set imageData with a UIImage.
     var image: UIImage {
