@@ -211,11 +211,20 @@ class DetailViewController: UIViewController {
     
     /// Configure the view for the current post.
     func configureView() {
+        updateNavigationTitle()
         if post == nil {
             configureViewNew()
         } else {
             configureViewEdit()
         }
+    }
+    
+    /// Update the navigation item title.
+    /// Either show the current date for a new post,
+    /// or show the date of a post for view/edit post.
+    func updateNavigationTitle() {
+        let date = post?.createDate ?? Date()
+        navigationItem.title = MasterViewController.navigationDateFormatter.string(from: date)
     }
     
     /// Update the thumbnail photo.

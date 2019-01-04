@@ -11,6 +11,14 @@ import CoreData
 
 /// Master that shows a list of diary posts.
 class MasterViewController: UITableViewController {
+    /// The date formatter for the navigation item title date.
+    static var navigationDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .long
+        result.timeStyle = .none
+        return result
+    }()
+    
     /// Posts data source for the table view.
     lazy var postsDataSource: PostsDataSource = {
         let result = PostsDataSource(tableView: tableView)
@@ -46,6 +54,7 @@ class MasterViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        navigationItem.title = MasterViewController.navigationDateFormatter.string(from: Date())
         super.viewWillAppear(animated)
     }
     
@@ -68,6 +77,7 @@ class MasterViewController: UITableViewController {
             // Split view controller fiddling with the nav bar back button
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
             controller.navigationItem.leftItemsSupplementBackButton = true
+            controller.updateNavigationTitle()
         }
     }
     
