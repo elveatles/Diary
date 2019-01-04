@@ -55,8 +55,6 @@ class CoreDataStackTests: XCTestCase {
     /// Does not save the context.
     /// - Returns: The test post created.
     @discardableResult func createTestPost() -> Post {
-        let bundle = Bundle(for: type(of: self))
-        
         let post: Post = coreDataStack.newObject()
         post.createDate = Date()
         post.updateSection()
@@ -66,7 +64,7 @@ class CoreDataStackTests: XCTestCase {
         
         let photo: Photo = coreDataStack.newObject()
         photo.createDate = Date()
-        let testImage = UIImage(named: "test", in: bundle, compatibleWith: nil)!
+        let testImage = #imageLiteral(resourceName: "test")
         photo.setImages(testImage)
         post.photos = [photo]
         
